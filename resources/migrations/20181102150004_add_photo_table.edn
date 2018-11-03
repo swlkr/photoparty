@@ -1,0 +1,6 @@
+[{:db/ident :album/ident :db/type "text"}
+ {:db/rel :album/photos :db/type :many :db/joins :photo/album}
+ {:db/ident :photo/ident :db/type "text"}
+ {:db/col :photo/name :db/type "text" :db/nil? false}
+ {:db/col :photo/content-type :db/type "text" :db/nil? false}
+ {:db/col :photo/size :db/type "integer" :db/nil? false :db/default 0}]

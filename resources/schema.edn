@@ -1,0 +1,14 @@
+{:constraints #{},
+ :album/photos #:db{:type :many, :joins :photo/album},
+ :photo/ident #:db{:type "text"},
+ :album/ident #:db{:type "text"},
+ :photo/content-type #:db{:type "text", :nil? false},
+ :joins
+ {:album/photos "join photo on photo.album = album.id",
+  :photo/album :photo/album},
+ :idents #{:photo/id :photo/ident :album/id :album/ident},
+ :rels #{:album/photos},
+ :cols #{:photo/content-type :photo/ext :photo/size :photo/name},
+ :photo/ext #:db{:type "text", :nil? false},
+ :photo/size #:db{:type "integer", :nil? false, :default 0},
+ :photo/name #:db{:type "text", :nil? false}}
