@@ -52,6 +52,10 @@ Dropzone.options.dropzone = {
     var submitButton = document.querySelector("#submit-all")
         myDropzone = this; // closure
 
+    var infoText = document.querySelector("#info-text");
+    var uploadText = document.querySelector("#upload-text");
+    var partyEmoji = document.querySelector("#party-emoji");
+
     submitButton.addEventListener("click", function(e) {
       e.preventDefault();
 
@@ -61,7 +65,10 @@ Dropzone.options.dropzone = {
     // You might want to show the submit button only when
     // files are dropped here:
     this.on("addedfile", function() {
-      $(submitButton).addClass("db").removeClass("dn")
+      $(partyEmoji).removeClass("dn");
+      $(submitButton).removeClass("dn").addClass("db");
+      $(infoText).remove();
+      $(uploadText).removeClass("dn");
       // Show submit button here and/or inform user to click it.
     });
   }
