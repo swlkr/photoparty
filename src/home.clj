@@ -1,21 +1,26 @@
-(ns home.index
+(ns home
   (:require [coast]
             [clojure.string :as string]
             [clojure.data.json :as json]
             [clojure.java.shell :refer [sh]])
   (:import (java.io FileOutputStream FileInputStream)))
 
-(defn view [request]
-  [:div
+(defn index [request]
+  [:div {:class "mw6 center tc"}
    (coast/form (merge {:id "dropzone"
                        :class "dropzone w-100 h-100"
                        :style "border: none"
                        :enctype "multipart/form-data"}
                       (coast/action-for ::action))
-    [:h1 {:class "f1-ns f3 tc"} "Photo Party 🎉"]
-    [:div {:class "f3 tc mb2"} "Tap, click or drag anywhere"]
-    [:div {:class "f6 mid-gray tc"} "(Except on the text)"]
-    [:button {:id "submit-all" :style "cursor: pointer" :class "mv4 br1 dn w5 pv3 bg-blue white tc center bn"}
+    [:h1 {:class "f1-ns f3 tc"} "Photo Party"
+     [:span {:id "party-emoji" :class "dn"} " 🎉"]]
+    [:div {:id "info-text"}
+     [:div {:class "f3 tc mb2"} "Tap, click or drag anywhere"]
+     [:div {:class "f6 mid-gray tc"} "(Except on the text)"]]
+    [:div {:id "upload-text" :class "dn"}
+     [:div {:class "f3 tc mb2"} "Hey! You added some photos!"]
+     [:div {:class "f6 mid-gray tc"} "Click upload to start uploading!"]]
+    [:button {:id "submit-all" :style "cursor: pointer" :class "mv4 br1 dn w5 pv3 bg-blue white tc center bn shadow-4"}
      "Upload"]
     [:span {:class "dz-message"}])])
 
@@ -66,4 +71,25 @@
           (save file)
           (thumbnail file))
         (coast/ok {:album-ident album-ident} {"content-type" "application/json"}))
-      (view (merge request errors)))))
+      (index (merge request errors)))))
+
+(defn not-found [request]
+  (coast/not-found
+    [:html
+     [:head
+      [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
+      [:link {:href "/css/app.css" :type "text/css" :rel "stylesheet"}]
+      (coast/css "bundle.css")
+      (coast/js "bundle.js")]
+     [:body
+      [:h1 "Couldn't find what you were looking for"]]]))
+
+(defn server-error [request]
+  (coast/server-error
+    [:html
+      [:head
+       [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
+       (coast/css "bundle.css")
+       (coast/js "bundle.js")]
+      [:body
+       [:h1 "Something went wrong!"]]]))
