@@ -35,9 +35,9 @@ $(function() {
 
 Dropzone.options.dropzone = {
   autoProcessQueue: false,
-  maxFilesize: 100, // MB
-  acceptedFiles: "image/*",
-  maxThumbnailFilesize: 50, // MB
+  maxFilesize: 64, // MB
+  acceptedFiles: ".jpg,.jpeg,.png",
+  maxThumbnailFilesize: 64, // MB
   thumbnailWidth: 150,
   thumbnailHeight: 150,
   addRemoveLinks: true,
